@@ -1,23 +1,23 @@
 # 💼 Personal Assets Management System
 
-![Status](https://img.shields.io/badge/Status-On_Going-green)
-![Project](https://img.shields.io/badge/Project-Assets%20Management-blue)
-![PHP](https://img.shields.io/badge/Language-PHP-yellow)
+![Status](https://img.shields.io/badge/Status-On-Going-green)
+![Project](https://img.shields.io/badge/Project-Personal%20Assets%20Management-blue)
+![Python](https://img.shields.io/badge/Language-Python-yellow)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
-![Bootstrap](https://img.shields.io/badge/Frontend-Bootstrap-orange)
+![Django](https://img.shields.io/badge/Framework-Django-green)
+![HTML](https://img.shields.io/badge/Frontend-HTML%2FCSS-orange)
 
-A full-featured PHP-based platform for individuals to manage and track their personal assets, income sources, tax and zakat obligations. It enables users to organize finances with supporting documentation and receive automated due reminders.
+A full-featured web application built using Django for individuals to manage their income sources, assets, taxes, and zakat obligations. The platform tracks financial records, calculates dues, and provides document management and notifications.
 
 ## 🔍 Features
 
-- 🔐 **User Authentication** (Admin & Regular User)
-- 💸 **Income Management**: Track income from salary, business, or investments
-- 🏠 **Asset Management**: Record and categorize assets like land, gold, or shares
-- 🧾 **Tax & Zakat Tracking**: Calculate, track, and update obligations
-- 📤 **Upload Documents**: Attach proof for income and assets
-- 📅 **Due Reminders**: Notification system for tax/zakat deadlines
-- 🧑‍💼 **Admin Control**: Admins with different roles (Super Admin, Moderator)
-- 📱 **Responsive UI**: Optimized for mobile and desktop
+- 🔐 **Role-Based Access**: Admin and user roles with different access levels
+- 💰 **Income Tracker**: Record salary, business, or investment income
+- 🏠 **Asset Manager**: Add tangible, land, or share-based assets with documents
+- 🧾 **Tax & Zakat Calculator**: Automatically calculate based on records
+- 📎 **Document Upload**: Attach NIDs, income proofs, and asset files
+- 📆 **Due Date Alerts**: Upcoming tax/zakat deadlines and payment status
+- 📱 **Responsive UI**: Clean layout using HTML and CSS
 
 ---
 
@@ -25,8 +25,8 @@ A full-featured PHP-based platform for individuals to manage and track their per
 
 | Layer      | Technology            |
 |------------|------------------------|
-| Frontend   | HTML5, CSS3, Bootstrap |
-| Backend    | Python-Django          |
+| Frontend   | HTML5, CSS3            |
+| Backend    | Python (Django)        |
 | Database   | MySQL                  |
 | Versioning | Git + GitHub           |
 
