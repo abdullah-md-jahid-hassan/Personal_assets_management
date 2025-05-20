@@ -1,6 +1,6 @@
 # 💼 Personal Assets Management System
 
-![Status](https://img.shields.io/badge/Status-On-Going-green)
+![Status](https://img.shields.io/badge/Status-On_Going-green)
 ![Project](https://img.shields.io/badge/Project-Assets%20Management-blue)
 ![PHP](https://img.shields.io/badge/Language-PHP-yellow)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
