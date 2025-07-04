@@ -1,5 +1,5 @@
 """
-WSGI config for personal_assets_management project.
+WSGI config for Personal_assets_management project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'personal_assets_management.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Personal_assets_management.settings')
 
 application = get_wsgi_application()
