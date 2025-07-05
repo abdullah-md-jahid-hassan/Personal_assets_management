@@ -14,7 +14,10 @@ urlpatterns = [
     path('api/', include('api.urls')),
 
     # Url for accounts
-    path('accounts/', include('accounts.urls')),
+    path('', include('accounts.urls')),
+
+    # Url for dashboard
+    path('dashboard/', include('dashboard.urls')),
 ]
 
 # URL pattern for media files

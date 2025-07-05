@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Asset Distribution -->
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Asset Distribution</h5>
+                <canvas id="assetDistributionChart"></canvas>
+            </div>
+        </div>
+        <!-- Income & Expense Trend -->
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Income & Expense Trend</h5>
+                <canvas id="combinedTrendChart"></canvas>
+            </div>
+        </div>
+        <!-- Income by Type -->
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Income by Type</h5>
+                <canvas id="incomeTypeChart"></canvas>
+            </div>
+        </div>
+        <!-- Expense by Category -->
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Expense by Category</h5>
+                <canvas id="expenseTypeChart"></canvas>
+            </div>
+        </div>
+        <!-- Tax & Zakat Status and Notifications -->
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Tax & Zakat Status</h5>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div class="bg-primary-custom rounded p-2 mb-2">Tax Due</div>
+                        <div id="taxDue" class="fs-4">0</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-accent-custom rounded p-2 mb-2">Tax Paid</div>
+                        <div id="taxPaid" class="fs-4">0</div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="bg-danger-custom rounded p-2 mb-2">Zakat Due</div>
+                        <div id="zakatDue" class="fs-4">0</div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="bg-slate-custom rounded p-2 mb-2">Zakat Paid</div>
+                        <div id="zakatPaid" class="fs-4">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 dashboard-section">
+            <div class="card p-3 h-100 d-flex flex-row align-items-center justify-content-between">
+                <h5 class="card-title mb-0">Notifications</h5>
+                <span id="notificationBadge" class="badge bg-danger-custom fs-6">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Dummy static data for charts
+const dummyData = {
+    assets: {
+        labels: ['Real Estate', 'Gold & Jewelry', 'Stocks & Bonds', 'Cash & Savings', 'Vehicles'],
+        data: [1200000, 450000, 800000, 300000, 250000],
+        colors: ['#2563EB', '#F59E42', '#10B981', '#8B5CF6', '#EF4444']
+    },
+    income: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        data: [85000, 92000, 78000, 95000, 88000, 102000, 98000, 105000, 92000, 89000, 96000, 110000]
+    },
+    expenses: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        data: [45000, 52000, 48000, 55000, 49000, 58000, 54000, 62000, 56000, 53000, 59000, 65000]
+    },
+    incomeTypes: {
+        labels: ['Salary', 'Business Income', 'Investment Returns', 'Rental Income', 'Other'],
+        data: [180000, 95000, 45000, 35000, 15000],
+        colors: ['#2563EB', '#10B981', '#F59E42', '#8B5CF6', '#EF4444']
+    },
+    expenseCategories: {
+        labels: ['Housing', 'Transportation', 'Food & Dining', 'Healthcare', 'Entertainment', 'Utilities'],
+        data: [85000, 35000, 28000, 22000, 18000, 15000],
+        colors: ['#2563EB', '#10B981', '#F59E42', '#8B5CF6', '#EF4444', '#06B6D4']
+    },
+    taxZakat: {
+        taxDue: 45000,
+        taxPaid: 32000,
+        zakatDue: 12500,
+        zakatPaid: 8500
+    },
+    notifications: 7
+};
+
+// Asset Distribution Chart
+const assetDistributionChart = new Chart(document.getElementById('assetDistributionChart'), {
+    type: 'doughnut',
+    data: {
+        labels: dummyData.assets.labels,
+        datasets: [{
+            data: dummyData.assets.data,
+            backgroundColor: dummyData.assets.colors,
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    },
+    options: { 
+        plugins: { 
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percentage = ((context.parsed / total) * 100).toFixed(1);
+                        return `${context.label}: $${context.parsed.toLocaleString()} (${percentage}%)`;
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Combined Income & Expense Trend Chart
+const combinedTrendChart = new Chart(document.getElementById('combinedTrendChart'), {
+    type: 'line',
+    data: {
+        labels: dummyData.income.labels,
+        datasets: [
+            {
+                label: 'Income',
+                data: dummyData.income.data,
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16,185,129,0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#10B981',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            },
+            {
+                label: 'Expense',
+                data: dummyData.expenses.data,
+                borderColor: '#EF4444',
+                backgroundColor: 'rgba(239,68,68,0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#EF4444',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }
+        ]
+    },
+    options: { 
+        plugins: { 
+            legend: { 
+                display: true,
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Income by Type Chart
+const incomeTypeChart = new Chart(document.getElementById('incomeTypeChart'), {
+    type: 'bar',
+    data: {
+        labels: dummyData.incomeTypes.labels,
+        datasets: [{
+            label: 'Amount',
+            data: dummyData.incomeTypes.data,
+            backgroundColor: dummyData.incomeTypes.colors,
+        }]
+    },
+    options: { 
+        plugins: { legend: { display: false } },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Expense by Category Chart
+const expenseTypeChart = new Chart(document.getElementById('expenseTypeChart'), {
+    type: 'pie',
+    data: {
+        labels: dummyData.expenseCategories.labels,
+        datasets: [{
+            data: dummyData.expenseCategories.data,
+            backgroundColor: dummyData.expenseCategories.colors,
+        }]
+    },
+    options: { 
+        plugins: { 
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percentage = ((context.parsed / total) * 100).toFixed(1);
+                        return `${context.label}: $${context.parsed.toLocaleString()} (${percentage}%)`;
+                    }
+                }
+            }
+        }
+    }
+});
+// Tax & Zakat Status
+document.getElementById('taxDue').textContent = dummyData.taxZakat.taxDue.toLocaleString();
+document.getElementById('taxPaid').textContent = dummyData.taxZakat.taxPaid.toLocaleString();
+document.getElementById('zakatDue').textContent = dummyData.taxZakat.zakatDue.toLocaleString();
+document.getElementById('zakatPaid').textContent = dummyData.taxZakat.zakatPaid.toLocaleString();
+// Notifications
+document.getElementById('notificationBadge').textContent = dummyData.notifications;
+</script>
+{% endblock %}

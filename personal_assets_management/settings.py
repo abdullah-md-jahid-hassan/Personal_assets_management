@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,10 @@ INSTALLED_APPS = [
     # Apps
     'api',
     'accounts',
+    'dashboard',
+    'assets',
+    'incomes',
+    
 
     # Other Required Apps
     'rest_framework',
@@ -67,7 +72,7 @@ ROOT_URLCONF = 'Personal_assets_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -157,3 +162,9 @@ REST_FRAMEWORK = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development! Configure properly for production
 CORS_ALLOW_CREDENTIALS = True
+
+
+SIMPLE_JWT = {
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=40),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+}

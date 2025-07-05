@@ -1,0 +1,312 @@
+/* Variables */
+:root {
+    --background-color: #F8FAFC;
+    --primary-color: #2563EB;
+    --accent-color: #10B981;
+    --danger-color: #EF4444;
+    --text-color: #1E293B;
+    --navbar-height: 56px;
+}
+
+/* Common */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* NavBar */
+.transparent-nav {
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+    background-color: rgba(16, 185, 129, 0.3);
+    color: var(--text-color);
+}
+
+.transparent-nav.scrolled {
+    background-color: rgba(16, 185, 129, 0.9);
+}
+
+
+
+/* Scroll to top button styles */
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 999;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.2s;
+}
+#scrollToTopBtn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+#scrollToTopBtn:hover {
+    background: #1E40AF;
+}
+
+
+
+/* Dashboard */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.card-title {
+    color: var(--primary-color);
+}
+
+.dashboard-section {
+    margin-bottom: 2rem;
+}
+
+/* Ensure main content starts below the navbar */
+body > .container, body > .container-fluid, body > .main-content {
+    margin-top: var(--navbar-height);
+}
+
+@media (min-width: 992px) {
+    body > .container, body > .container-fluid, body > .main-content {
+        margin-top: calc(var(--navbar-height) + 16px);
+    }
+}
+
+/* Login Page Styles */
+.login-container {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.login-card {
+    background: var(--background-color);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.login-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    color: #6B7280;
+    font-size: 0.95rem;
+}
+
+.form-label {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+.input-group-text {
+    background-color: #F9FAFB;
+    border: 2px solid #E5E7EB;
+    border-right: none;
+    color: #6B7280;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.btn-login {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1E40AF 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-danger {
+    background-color: #FEF2F2;
+    color: #DC2626;
+}
+
+/* Stay Logged In checkbox styles */
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-check-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+.form-check-label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.form-check-label:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        padding: 30px 20px;
+    }
+}
+
+/* Registration Page Styles */
+.register-container {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.register-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.register-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.register-subtitle {
+    color: #6B7280;
+    font-size: 0.95rem;
+}
+
+.btn-register {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1E40AF 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 10px;
+}
+
+.strength-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #E5E7EB;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-fill.weak {
+    width: 25%;
+    background-color: #EF4444;
+}
+
+.strength-fill.fair {
+    width: 50%;
+    background-color: #F59E0B;
+}
+
+.strength-fill.good {
+    width: 75%;
+    background-color: #10B981;
+}
+
+.strength-fill.strong {
+    width: 100%;
+    background-color: #059669;
+}
+
+.strength-text {
+    color: #6B7280;
+    font-size: 0.8rem;
+}
+
+/* Form validation styles */
+.form-control.is-valid {
+    border-color: var(--accent-color);
+}
+
+.form-control.is-invalid {
+    border-color: var(--danger-color);
+}
+
+.invalid-feedback {
+    display: block;
+    color: var(--danger-color);
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.alert-success {
+    background-color: #F0FDF4;
+    color: #059669;
+    border: none;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .register-card {
+        padding: 30px 20px;
+    }
+}

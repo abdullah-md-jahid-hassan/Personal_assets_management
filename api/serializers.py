@@ -12,10 +12,19 @@ class registerSerializer(serializers.ModelSerializer):
         validate_password(value)
         return value
 
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = Person(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
     class Meta:
         model = Person
         fields = [
-            'first_name', 'last_name', 'email', 'phone', 'password', 'nid', 'dob', 'gender',
-            'area_present', 'city_present', 'country_present', 'area_permanent', 'city_permanent',
-            'country_permanent', 'profile_photo'
+            'email', 'username', 'password'
         ]
+        extra_kwargs = {
+            'username': {'required': True},
+            'password': {'required': True, 'write_only': True}
+        }
