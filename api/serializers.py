@@ -28,3 +28,14 @@ class registerSerializer(serializers.ModelSerializer):
             'username': {'required': True},
             'password': {'required': True, 'write_only': True}
         }
+
+
+class logoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField(required=True)
+    access = serializers.CharField(required=True)
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = '__all__'
+        

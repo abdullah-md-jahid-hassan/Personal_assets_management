@@ -142,3 +142,4 @@ def register_view(request):
     
     # GET request - show registration form
     return render(request, 'register.html')
+

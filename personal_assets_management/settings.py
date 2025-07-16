@@ -45,12 +45,14 @@ INSTALLED_APPS = [
     'dashboard',
     'assets',
     'incomes',
+    'verify',
     
 
     # Other Required Apps
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 
     # Third party apps
     #'django_live_reload',
@@ -167,4 +169,16 @@ CORS_ALLOW_CREDENTIALS = True
 SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=40),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": False,
 }
+
+# Email (SMTP) configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'myasset.000@gmail.com'
+EMAIL_HOST_PASSWORD = 'doeftodwuusmlwjg'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
