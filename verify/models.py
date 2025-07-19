@@ -1,3 +1,5 @@
+import email
+from pyexpat import model
 from django.db import models
 from accounts.models import Person
 from django.utils import timezone
@@ -6,8 +8,9 @@ from datetime import timedelta
 
 # Create your models here.
 class OTP(models.Model):
-    otp = models.CharField(max_length=6)
     user = models.ForeignKey(Person, on_delete=models.CASCADE)
+    email = models.EmailField(blank=False)
+    otp = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
     
     @property

@@ -21,6 +21,7 @@ class Person(AbstractUser):
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     email = models.EmailField(unique=True, blank=True, null=True)
+    is_email_verified = models.BooleanField(default=False)
     phone = models.CharField(max_length=20, blank=True, null=True)
     nid = models.CharField(max_length=20, verbose_name='National ID', blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)

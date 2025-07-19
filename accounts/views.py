@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import login
 import requests
-import json
-from django.conf import settings
 
 def login_view(request):
     if request.method == 'POST':
@@ -41,7 +37,7 @@ def login_view(request):
                     request.session['stay_logged_in'] = True
                 else:
                     # Default session expiry (usually 2 weeks)
-                    request.session.set_expiry(0)  # Browser session
+                    request.session.set_expiry(40 * 24 * 60 * 60)  # Browser session
                     request.session['stay_logged_in'] = False
                 
                 # Return API data as JSON response
@@ -143,3 +139,7 @@ def register_view(request):
     # GET request - show registration form
     return render(request, 'register.html')
 
+# for logout               
+# Delete the token form session
+# request.session.pop('access_token', None)
+# request.session.pop('refresh_token', None)
