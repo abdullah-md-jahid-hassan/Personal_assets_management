@@ -1,26 +1,31 @@
-import random
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response, Serializer
-from django.contrib.auth import authenticate
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+
+from django.utils import timezone
+from django.contrib.auth import authenticate
+from django.template.loader import render_to_string
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
 from .serializers import loginSerializer, registerSerializer, logoutSerializer, UserSerializer, OTPSerializer
 
 from verify.models import OTP
 
-from django.utils import timezone
 from datetime import timedelta
 
-from .email import send_email
+from api.utility.email import SendEmail
+from api.utility.verify import Verify_OTP
 
 from accounts.models import Person
 
+from django.core import signing
+from django.core.signing import SignatureExpired, BadSignature
+
 import random
+import os
 
 
 
@@ -37,7 +42,7 @@ class RegisterView(APIView):
             return Response({'detail': 'Email and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check for email duplication
-        if Person.objects.filter(email=email).exists():
+        if Person.objects.filter(email=email, is_email_verified=True).exists():
             return Response({'detail': 'Email already exists.'}, status=status.HTTP_409_CONFLICT)
 
         # Prepare data for serializer
@@ -163,11 +168,28 @@ class SendOTP(APIView):
                 return Response(
                     {'message': 'OTP Creation failed'},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                
+            # Create verification link
+            data = {'pk': request.user.pk, 'email': request_email, 'otp': otp}
+            import os
+            token = signing.dumps(data, salt=os.getenv('VERIFY_EMAIL_TOKEN_SALT', 'email_verification-link_slat'))
+            verification_link = f"http://{request.get_host()}/api/VerifyEmailByLink/?token={token}"
             
-            # Send email with subject and body
+            # Prepare Email credential
             subject = 'Verification OTP - Personal Asset Management'
-            body = f"Your Verification OTP for the Email '{request_email}' is - {str(otp)}"
-            send_email(subject, body, request_email)
+            massage = f"Your Verification OTP for the Email '{request_email}' is - {str(otp)}"
+            if verification_link:
+                html_message = render_to_string('email_html.html', {'otp': otp, 'verification_link': verification_link})
+            else:
+                html_message = None
+            
+            # Send Email    
+            SendEmail(
+                subject,
+                massage,
+                request_email,
+                html_message=html_message
+            )
             
             # Return a success response indicating OTP validity period
             return Response(
@@ -178,17 +200,32 @@ class SendOTP(APIView):
         # If serializer is not valid, return errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
-# class verifyOTP(APIView):
-#     serializer_class = OTPSerializer
-#     permission_classes = [IsAuthenticated]
+class VerifyOTP(APIView):
+    permission_classes = [IsAuthenticated]
     
-#     def post(self, request, *args, **kwargs):
-#         user = request.user,
-#         otp = request.get('otp')
-#         serializer = self.serializer_class(data={
-#             'user': user,
-#             'otp': otp
-#             })
+    def post(self, request, *args, **kwargs):
+        # Extract id, email and otp from the request data
+        user_id = request.user.id
+        email = request.data.get('email')
+        otp = request.data.get('otp')
         
-#         if serializer.is_valid() and OTP.objects.filter(user = user, otp = otp):
-            
+        return Verify_OTP(user_id, email, otp)    
+        
+class VerifyOTPByLink(APIView):
+    def get(self, request, *args, **kwargs):
+        # GET token
+        token = request.GET.get('token')
+        
+        try:
+            # Decode the token
+            data = signing.loads(
+                token,
+                salt=os.getenv('VERIFY_EMAIL_TOKEN_SALT', 'email_verification-link_slat'),
+                max_age=300  # 5 minutes
+            )
+        except SignatureExpired:
+            return Response({'message': 'Verification link has expired. Please request a new one.'}, status.HTTP_400_BAD_REQUEST)
+        except BadSignature:
+            return Response({'message': 'Invalid verification link.'}, status.HTTP_400_BAD_REQUEST)
+        return Verify_OTP(data['pk'], data['email'], data['otp'])
+    

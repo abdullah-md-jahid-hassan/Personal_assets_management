@@ -9,7 +9,7 @@ class PersonAdmin(UserAdmin):
     """Admin configuration for the Person model"""
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'phone', 'nid', 'gender', 'dob')}),
+        (('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'is_email_verified', 'phone', 'nid', 'gender', 'dob')}),
         (('Present Address'), {'fields': ('area_present', 'city_present', 'country_present')}),
         (('Permanent Address'), {'fields': ('area_permanent', 'city_permanent', 'country_permanent')}),
         (('User Type'), {'fields': ('type', 'profile_photo')}),

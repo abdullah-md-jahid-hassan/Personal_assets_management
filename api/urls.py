@@ -8,5 +8,7 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('sendOTP/', views.SendOTP.as_view(), name='Send OTP'),
+    path('verifyOTP/', views.VerifyOTP.as_view(), name='Verify OTP'),
+    path('VerifyEmailByLink/', views.VerifyOTPByLink.as_view(), name='Verify OTP By Email'),
     path('get-access-by-refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
