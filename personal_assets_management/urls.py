@@ -18,6 +18,10 @@ urlpatterns = [
 
     # Url for dashboard
     path('dashboard/', include('dashboard.urls')),
+    path('', include('accounts.urls')),
+
+    # Url for Verify
+    path('verify/', include('verify.urls')),
 ]
 
 # URL pattern for media files

@@ -39,11 +39,11 @@ class RegisterView(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
         if not email or not password:
-            return Response({'detail': 'Email and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Email and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check for email duplication
         if Person.objects.filter(email=email, is_email_verified=True).exists():
-            return Response({'detail': 'Email already exists.'}, status=status.HTTP_409_CONFLICT)
+            return Response({'message': 'Email already exists.'}, status=status.HTTP_409_CONFLICT)
 
         # Prepare data for serializer
         data = {
@@ -54,10 +54,17 @@ class RegisterView(APIView):
         serializer = self.serializer_class(data=data)
         
         if serializer.is_valid():
-            serializer.save()
-            return Response({'email': email}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.save():
+                return Response({'email': email}, status=status.HTTP_201_CREATED)
+            
+        serializer_error = "\n--> ".join(
+            str(error)
+            for errors in serializer.errors.values()
+            for error in errors
+        )
+        serializer_error = '-->' + serializer_error
+
+        return Response({'message': serializer_error}, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
     serializer_class = loginSerializer
@@ -77,10 +84,10 @@ class LoginView(APIView):
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                 }, status=status.HTTP_200_OK)
-            else:
-                return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(APIView):
     serializer_class = logoutSerializer

@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{% static 'css/verify_email.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Main Body -->
+    {% block body %}{% endblock %}
+
+    <!-- Extra JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

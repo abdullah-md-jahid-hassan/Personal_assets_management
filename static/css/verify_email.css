@@ -1,0 +1,77 @@
+body {
+    background: #f4f7fa;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.otp-container {
+    background: #fff;
+    padding: 36px 32px 32px 32px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
+}
+.otp-container h2 {
+    margin-bottom: 18px;
+    color: #2d7ff9;
+    font-size: 1.5em;
+}
+.otp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.otp-form input[type="email"] {
+    padding: 12px;
+    border: 1px solid #cfd8dc;
+    border-radius: 5px;
+    font-size: 1em;
+    outline: none;
+    transition: border 0.2s;
+}
+.otp-form input[type="email"]:focus {
+    border-color: #2d7ff9;
+}
+.otp-form button {
+    padding: 12px;
+    background: #2d7ff9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.otp-form button:hover {
+    background: #1a5fc2;
+}
+.message {
+    margin-top: 16px;
+    font-size: 1em;
+    color: #388e3c;
+}
+.error {
+    margin-top: 16px;
+    font-size: 1em;
+    color: #d32f2f;
+}
+
+
+/* OTP input field styles */
+.otp-form input[type="text"] {
+    padding: 12px;
+    border: 1px solid #cfd8dc;
+    border-radius: 5px;
+    font-size: 1em;
+    outline: none;
+    transition: border 0.2s;
+}
+.otp-form input[type="text"]:focus {
+    border-color: #2d7ff9;
+}

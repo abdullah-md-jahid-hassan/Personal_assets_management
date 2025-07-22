@@ -35,6 +35,15 @@
                         </div>
                         {% endif %}
                         
+                        {% if success_message %}
+                        <div class="alert alert-success" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ success_message }}
+                        </div>
+                        {% endif %}
+
+
+                        
 
                         <!-- Username -->
                         <div class="form-group mb-3">

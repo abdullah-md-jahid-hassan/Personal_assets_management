@@ -20,8 +20,8 @@
                         <!-- Error messages -->
                         {% if error %}
                         <div class="alert alert-danger" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            {{ error }}
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i><br>
+                            {{ error|linebreaksbr }}
                         </div>
                         {% endif %}
                         
@@ -42,24 +42,12 @@
                                 <input type="email" 
                                        class="form-control" 
                                        id="email" 
-                                       name="email" 
-                                       placeholder="Enter your email"
-                                       required>
-                            </div>
-                        </div>
-                        
-                        <!-- Username -->
-                        <div class="form-group mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-person-fill"></i>
-                                </span>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="username" 
-                                       name="username" 
-                                       placeholder="Choose a username"
+                                       name="email"
+                                       {% if email %}
+                                        value="{{ email }}"
+                                       {% else %}
+                                        placeholder="Enter your email"
+                                       {% endif %}
                                        required>
                             </div>
                         </div>
