@@ -1,0 +1,47 @@
+{% extends 'master_verify_email.html' %}
+
+{% block title %}Verify OTP{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+            <h2 class="mb-4 text-center">Verify Your Email</h2>
+            <form id="verify-otp-form" class="needs-validation" method="post">
+                {% csrf_token %}
+
+                <!-- Message -->
+                {% if message %}
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <p>{{ message }}</p>
+                    </div>
+                {% endif %}
+                
+                {% if error %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <p>{{ error }}</p>
+                    </div>
+                {% endif %}
+                
+                <!-- Email -->
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{ email|default:'' }}" required>
+                    <button class="btn btn-outline-primary" name="send_otp" value="1" type="submit">Send OTP</button>
+                </div>
+
+                {% if otp_sent %}
+                    <!-- OTP -->
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" maxlength="6" required>
+                    </div>
+
+                    <!-- Submit button -->
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-primary" name="verify_otp" value="1" type="submit">Verify OTP</button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

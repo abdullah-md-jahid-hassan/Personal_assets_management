@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.template.loader import render_to_string
 
+from rest_framework.exceptions import NotAuthenticated
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
@@ -93,7 +95,13 @@ class LogoutView(APIView):
     serializer_class = logoutSerializer
     permission_classes = [IsAuthenticated]
 
+    def handle_exception(self, exc):
+        if isinstance(exc, NotAuthenticated):
+            return Response({'message': 'Unauthorized access'}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().handle_exception(exc)
+
     def post(self, request, *args, **kwargs):
+        
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             try:
@@ -104,17 +112,18 @@ class LogoutView(APIView):
                 token.blacklist()
                 
                 return Response({
-                    'detail': 'Successfully logged out. Tokens have been blacklisted.'
+                    'message': 'Successfully logged out. Tokens have been blacklisted.'
                 }, status=status.HTTP_200_OK)
             except TokenError:
                 return Response({
-                    'detail': 'Invalid token provided.'
+                    'message': 'Invalid token provided.'
                 }, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DashboardView(APIView):
     permission_classes = [IsAuthenticated]
+    
     def get(self, request, *args, **kwargs):
         user_type = request.user.type
         if user_type == 'admin':
@@ -135,6 +144,11 @@ class DashboardView(APIView):
 class SendOTP(APIView):
     serializer_class = OTPSerializer
     permission_classes = [IsAuthenticated]
+
+    def handle_exception(self, exc):
+        if isinstance(exc, NotAuthenticated):
+            return Response({'message': 'Unauthorized access'}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().handle_exception(exc)
 
     def post(self, request, *args, **kwargs):
         # Get the email from the request data
@@ -209,6 +223,17 @@ class SendOTP(APIView):
             
 class VerifyOTP(APIView):
     permission_classes = [IsAuthenticated]
+
+    def handle_exception(self, exc):
+        if isinstance(exc, NotAuthenticated):
+            return Response({'message': 'Unauthorized access'}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().handle_exception(exc)
+
+    def handle_exception(self, exc):
+        from rest_framework.exceptions import NotAuthenticated
+        if isinstance(exc, NotAuthenticated):
+            return Response({'message': 'Unauthorized access'}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().handle_exception(exc)
     
     def post(self, request, *args, **kwargs):
         # Extract id, email and otp from the request data

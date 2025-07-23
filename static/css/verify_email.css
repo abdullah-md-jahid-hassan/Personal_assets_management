@@ -1,77 +1,40 @@
+/* Minimal custom styles for verify_email.html with Bootstrap 5.3 */
 body {
     background: #f4f7fa;
     min-height: 100vh;
-    margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Optionally center the card if not already centered by Bootstrap utility classes */
+
+
+.response-message {
+    margin-top: 1rem;
+}
+
+.alert-success, .alert-danger {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-}
-.otp-container {
-    background: #fff;
-    padding: 36px 32px 32px 32px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    max-width: 350px;
-    width: 100%;
-    text-align: center;
-}
-.otp-container h2 {
-    margin-bottom: 18px;
-    color: #2d7ff9;
-    font-size: 1.5em;
-}
-.otp-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-.otp-form input[type="email"] {
-    padding: 12px;
-    border: 1px solid #cfd8dc;
-    border-radius: 5px;
-    font-size: 1em;
-    outline: none;
-    transition: border 0.2s;
-}
-.otp-form input[type="email"]:focus {
-    border-color: #2d7ff9;
-}
-.otp-form button {
-    padding: 12px;
-    background: #2d7ff9;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.otp-form button:hover {
-    background: #1a5fc2;
-}
-.message {
-    margin-top: 16px;
-    font-size: 1em;
-    color: #388e3c;
-}
-.error {
-    margin-top: 16px;
-    font-size: 1em;
-    color: #d32f2f;
+    gap: 0.5rem;
+    min-height: unset;
+    margin-bottom: 1rem;
 }
 
-
-/* OTP input field styles */
-.otp-form input[type="text"] {
-    padding: 12px;
-    border: 1px solid #cfd8dc;
-    border-radius: 5px;
-    font-size: 1em;
-    outline: none;
-    transition: border 0.2s;
+.alert-success i, .alert-danger i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    line-height: 1;
 }
-.otp-form input[type="text"]:focus {
-    border-color: #2d7ff9;
+
+.alert-success p, .alert-danger p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+}
+
+/* Optionally, reduce the card's vertical padding for a more compact look */
+.card.p-4 {
+    padding: 1.5rem !important;
 }

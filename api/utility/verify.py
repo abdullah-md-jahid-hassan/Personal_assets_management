@@ -1,5 +1,7 @@
+from django.shortcuts import render
 from django.utils import timezone
 
+import requests
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -47,4 +49,4 @@ def Verify_OTP(id, email, otp):
     # Delete the used OTP
     otp_obj.delete()
 
-    return Response({'message': 'OTP verified'}, status=status.HTTP_200_OK)
+    return render(requests, 'email_verified.html', {'message': 'OTP verified'}, status=status.HTTP_200_OK)

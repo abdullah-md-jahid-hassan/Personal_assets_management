@@ -14,11 +14,10 @@ urlpatterns = [
     path('api/', include('api.urls')),
 
     # Url for accounts
-    path('', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
 
     # Url for dashboard
     path('dashboard/', include('dashboard.urls')),
-    path('', include('accounts.urls')),
 
     # Url for Verify
     path('verify/', include('verify.urls')),

@@ -4,6 +4,5 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('SendOTP/', views.send_otp, name='Send OTP'),
-    # path('VerifyOTP/', views.verify_otp, name='Verify OTP'),
+    path('verify_email/', views.verify_email, name='verify_email'),
 ]
